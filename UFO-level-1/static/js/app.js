@@ -1,53 +1,45 @@
 // from data.js
 var tableData = data;
+// console.log(tableData)
 
 // YOUR CODE HERE!
-// define/select table body
+
+// Define/select tbody, button, input tags
 var tbody = d3.select("tbody");
-
-// define/select table body
 var button = d3.select("#filter-btn");
-
-// Select the form
-var form = d3.select("#form");
-
-// Select the input element and get the raw HTML node
+var form = d3.select("form");
 var dateElement = d3.select("#datetime");
-
+  
 // Execute when the form is first loaded
-document.onload = runEnter(1);
+document.onload = runEnter(0);
 
-// Create event handlers 
+// Event handlers 
 button.on("click", runEnter);
-form.on("submit",runEnter);
+form.on("submit", runEnter);
 
-// Event handler function for the form and the button
+// Run event function
 function runEnter(value) {
     console.log(value);
-    // Prevent the page from refreshing 
-    if (value!=1) {   
-            console.log(value + ' inside')
-            d3.event.preventDefault()
-        };
+    // Prevent the page from refreshing
+    if (value!=0)
+        {d3.event.preventDefault();}
 
     // Get the value property of the date element
-    var dateValue = dateElement.property("value");
+    var date = dateElement.property("value");
+    console.log(date);
+    // Clear the table body
+    tbody.html('');
 
-    console.log(dateValue);
+    // Filter datetime if date input is within the record
+    var matchDate = tableData.filter(record => record.datetime == (date===''?record.datetime:date))
 
-        // Clear the table body
-        tbody.html('');
-        // Filter datetime only if date input is entered
-        // Use the form input to filter the data by date
-        var matchedDateData = tableData.filter(record => record.datetime == (dateValue===''?record.datetime:dateValue))
-    
-        // Loop through each matching record and populate the table row and cell
-        matchedDateData.forEach((ufoData) => 
-            { 
-                var row = tbody.append("tr");
-                Object.entries(ufoData).forEach(([key,value]) =>
-                    {
-                        row.append("td").text(value);
-                    });
-            });
-    };
+    // Loop through the record and populate the table with the results
+    matchDate.forEach((ufoData) => 
+        { 
+            var row = tbody.append("tr");
+            Object.entries(ufoData).forEach(([key,value]) =>
+                {
+                    row.append("td").text(value);
+                });
+        });
+};
