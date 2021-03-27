@@ -1,1 +1,1 @@
-# -UWA-Data-Homework-Javascript-Challenge
+# UWA-Data-Homework-Javascript-Challenge
