@@ -4,10 +4,8 @@ var ufodata = data;
 
 // YOUR CODE HERE!
 
-// Define/select tbody, button
+// Define/select tbody
 var tbody = d3.select("tbody");
-var button = d3.select("#filter-btn");
-var form = d3.select("#form");
 
 // Loop through ufo data 
 ufodata.forEach((ufosighting) => {
@@ -22,6 +20,10 @@ ufodata.forEach((ufosighting) => {
     });
   });
 
+// Define/select button, form
+var button = d3.select("#filter-btn");
+var form = d3.select("#form");
+
 // Event handlers 
 button.on("click", runEnter);
 form.on("submit", runEnter);
@@ -32,30 +34,36 @@ function runEnter(){
     // Prevent the page from refreshing
     d3.event.preventDefault();
 
-    // Select the elements
+    // Select the input elements
     var dateElement = d3.select("#datetime");
     var cityElement = d3.select("#city");
     var stateElement = d3.select("#state");
     var countryElement = d3.select("#country");
     var shapeElement = d3.select("#shape")
 
-    // Get the value property of the elements
+    // Get the value property of the input elements
     var date = dateElement.property("value");
     var city = cityElement.property("value");
     var state = stateElement.property("value");
     var country = countryElement.property("value");
     var shape = shapeElement.property("value");
 
+    console.log(date);
+    console.log(city);
+    console.log(state);
+    console.log(country);
+    console.log(shape);
+
     // Clear the table body
     tbody.html('');
 
-    // Filter data if date input is within the record
-    var matchData = ufodata.filter(ufosighting => ufosighting.datetime == (inputValue===''?ufosighting.datetime:inputValue))
-    .filter(ufosighting => ufosighting.city == (inputCityValue===''?ufosighting.city:inputCityValue))
-    .filter(ufosighting => ufosighting.state == (inputStateValue===''?ufosighting.state:inputStateValue))
-    .filter(ufosighting => ufosighting.country == (inputCountryValue===''?ufosighting.country:inputCountryValue))
-    .filter(ufosighting => ufosighting.shape == (inputShapeValue===''?ufosighting.shape:inputShapeValue));
-    console.log(matchDate)
+    // Filter data if input is within the record
+    var matchData = ufodata.filter(ufosighting => ufosighting.datetime == (date===''?ufosighting.datetime:date))
+    .filter(ufosighting => ufosighting.city == (city===''?ufosighting.city:city))
+    .filter(ufosighting => ufosighting.state == (state===''?ufosighting.state:state))
+    .filter(ufosighting => ufosighting.country == (country===''?ufosighting.country:country))
+    .filter(ufosighting => ufosighting.shape == (shape===''?ufosighting.shape:shape));
+    console.log(matchData)
 
     // Assign variable to tbody to edit section
     ufo_table = d3.select("tbody");
